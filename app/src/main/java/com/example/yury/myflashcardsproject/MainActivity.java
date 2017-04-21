@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,8 +23,8 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     public static String JSON_FILE = "questions.json";
-    public static List<Card> cards;
-    public static RecyclerView.Adapter adapter;
+    public List<Card> cards;
+    public RVAdapter adapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +39,11 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RVAdapter(cards);
         rvCardList.setAdapter(adapter);
 
-        CardReader cardReader = new CardReader(this);
+        CardReader cardReader = new CardReader();
         cardReader.execute();
+
+
+
     }
 
     public static class Card {
@@ -50,22 +54,22 @@ public class MainActivity extends AppCompatActivity {
             this.question = question;
             this.answer = answer;
         }
+
+        public void warning() {
+            Log.w("1", "warning");
+        }
     }
 
-    private class CardReader extends AsyncTask <Void, Void, String>{
-        Context context;
-
-        public CardReader (Context context) {
-            super();
-            this.context = context;
-        }
+    private class CardReader extends AsyncTask <Void, Void, List<Card>>{
 
         @Override
-        protected String doInBackground(Void... voids) {
+        protected List<Card> doInBackground(Void... voids) {
+
             String jsonString = "";
+            List<Card> cardList;
 
             try {
-                InputStream inputStream = context.getAssets().open(MainActivity.JSON_FILE);
+                InputStream inputStream = getApplicationContext().getAssets().open(MainActivity.JSON_FILE);
                 int size = inputStream.available();
                 byte[] buffer = new byte[size];
                 inputStream.read(buffer);
@@ -80,27 +84,23 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
 
-            return jsonString;
-        }
-
-        @Override
-        protected void onPostExecute(String jsonString) {
-            HashMap<String, String> jsonMap = new HashMap<>();
-
+            cardList = new ArrayList<>();
             try{
                 JSONObject jsonObject = new JSONObject(jsonString);
                 JSONArray jsonArray = jsonObject.getJSONArray("questions");
-
                 for ( int i = 0; i < jsonArray.length(); i++) {
-
-                    cards.add(new Card(jsonArray.getJSONObject(i).getString("question"),
+                    cardList.add(new Card(jsonArray.getJSONObject(i).getString("question"),
                             jsonArray.getJSONObject(i).getString("answer")));
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            adapter.notifyDataSetChanged();
+            return cardList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Card> cardList) {
+            adapter.update(cardList);
         }
     }
 

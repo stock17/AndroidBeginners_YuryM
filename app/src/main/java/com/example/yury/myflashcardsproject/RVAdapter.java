@@ -1,6 +1,7 @@
 package com.example.yury.myflashcardsproject;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Yury on 19.04.2017.
- */
+
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
@@ -30,7 +29,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     }
 
     public RVAdapter (List<MainActivity.Card> list) {
-        cardList.clear();
         cardList.addAll(list);
         cardList.add(new MainActivity.Card("1", "2"));
     }
@@ -52,6 +50,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     @Override
     public int getItemCount() {
         return cardList.size();
+    }
+
+
+    public void update (List<MainActivity.Card> list) {
+        cardList.clear();
+        cardList.addAll(list);
+        notifyDataSetChanged();
     }
 
 
