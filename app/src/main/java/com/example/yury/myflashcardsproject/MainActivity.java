@@ -36,11 +36,12 @@ public class MainActivity extends AppCompatActivity {
         rvCardList.setHasFixedSize(true);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         rvCardList.setLayoutManager(manager);
-        adapter = new RVAdapter(cards);
+        adapter = new RVAdapter(cards, this);
         rvCardList.setAdapter(adapter);
 
         CardReader cardReader = new CardReader();
         cardReader.execute();
+
     }
 
     public static class Card {

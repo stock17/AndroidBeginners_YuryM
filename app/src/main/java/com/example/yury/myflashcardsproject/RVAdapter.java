@@ -1,5 +1,8 @@
 package com.example.yury.myflashcardsproject;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +19,9 @@ import java.util.Map;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
-    public List<MainActivity.Card> cardList = new ArrayList<MainActivity.Card>();
+    public static List<MainActivity.Card> cardList = new ArrayList<MainActivity.Card>();
+
+    public static Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -31,10 +36,16 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         @Override
         public void onClick(View v) {
             //TODO
+            int position = getAdapterPosition();
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("answer", cardList.get(position).answer);
+            intent.putExtra("question", cardList.get(position).question);
+            context.startActivity(intent);
         }
     }
 
-    public RVAdapter (List<MainActivity.Card> list) {
+    public RVAdapter (List<MainActivity.Card> list, Context context) {
+        this.context = context;
         cardList.addAll(list);
         cardList.add(new MainActivity.Card("1", "2"));
     }
