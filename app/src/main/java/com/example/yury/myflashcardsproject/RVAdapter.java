@@ -35,7 +35,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
         @Override
         public void onClick(View v) {
-            //TODO
             int position = getAdapterPosition();
             Intent intent = new Intent(context, DetailActivity.class);
             intent.putExtra("answer", cardList.get(position).answer);
