@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary">
+
+
+    <EditText
+        android:id="@+id/et_dialog_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/middle_margin"
+        android:ems="10"
+        android:hint="question"
+        android:background="@color/colorWhite"
+        />
+
+    <EditText
+        android:id="@+id/et_dialog_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/middle_margin"
+        android:hint="answer"
+        android:background="@color/colorWhite"
+        android:ems="10"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="CANCEL"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/btn_dialog_cancel"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ADD"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/btn_dialog_add"/>
+
+
+    </LinearLayout>
+</LinearLayout>

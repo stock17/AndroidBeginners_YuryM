@@ -1,24 +1,35 @@
 package com.example.yury.myflashcardsproject;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.IdRes;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +49,17 @@ public class MainActivity extends AppCompatActivity {
         rvCardList.setLayoutManager(manager);
         adapter = new RVAdapter(cards, this);
         rvCardList.setAdapter(adapter);
+
+        final DialogFragment addCardDialog = new AddCardDialog();
+
+        FloatingActionButton fabAddCard = (FloatingActionButton) findViewById(R.id.fab_add_card);
+        fabAddCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+                addCardDialog.show(getSupportFragmentManager(), "TAG");
+            }
+        });
 
         CardReader cardReader = new CardReader();
         cardReader.execute();
