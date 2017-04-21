@@ -6,13 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Yury on 19.04.2017.
  */
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
-    public String[] textdata;
+//    public String[] textdata;
+    public Map<String, String> textdata = new HashMap<>();
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -24,9 +28,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         }
     }
 
-    public RVAdapter () {
-        textdata = new String[] {"menu 1", "menu 2", "menu 3"};
-        // TODO
+    public RVAdapter (HashMap<String, String> map) {
+        textdata.clear();
+        textdata.putAll(map);
     }
 
     @Override
@@ -40,12 +44,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(RVAdapter.ViewHolder holder, int position) {
 
-        holder.tvListItemText.setText(textdata[position]);
+        holder.tvListItemText.setText(textdata.
+                [position]);
     }
 
     @Override
     public int getItemCount() {
-        return textdata.length;
+        return textdata.size();
     }
 
 
