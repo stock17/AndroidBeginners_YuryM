@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.yury.myflashcardsproject.RVAdapter.context;
+
 
 public class MainActivity extends AppCompatActivity {
 
