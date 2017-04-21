@@ -16,11 +16,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView tvListPointText;
+        public TextView tvListItemText;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tvListPointText = (TextView) itemView.findViewById(R.id.tvListPointText);
+            tvListItemText = (TextView) itemView.findViewById(R.id.tvListItemText);
         }
     }
 
@@ -32,7 +32,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     @Override
     public RVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_point, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         ViewHolder holder = new ViewHolder(v);
         return holder;
     }
@@ -40,7 +40,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(RVAdapter.ViewHolder holder, int position) {
 
-        holder.tvListPointText.setText(textdata[position]);
+        holder.tvListItemText.setText(textdata[position]);
     }
 
     @Override
