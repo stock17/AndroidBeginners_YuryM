@@ -1,0 +1,7 @@
+{
+    "What is Android?": "It is an open-sourced operating system that is used primarily on mobile devices, such as cell phones and tablets.",
+    "What Is the Google Android SDK?": "The Google Android SDK is a toolset that developers need in order to write apps on Android enabled devices.",
+    "What is the Android Architecture?":"Android Architecture is made up of 4 key components: Linux Kernel, Libraries, Android Framework, Android Applications",
+    "What is AAPT?":"AAPT is short for Android Asset Packaging Tool.",
+    "What is the importance of having an emulator within the Android environment?":"The emulator lets developers “play” around an interface that acts as if it were an actual mobile device."
+}
