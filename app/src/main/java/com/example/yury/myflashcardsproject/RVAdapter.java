@@ -18,13 +18,19 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     public List<MainActivity.Card> cardList = new ArrayList<MainActivity.Card>();
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView tvListItemText;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             tvListItemText = (TextView) itemView.findViewById(R.id.tvListItemText);
+        }
+
+        @Override
+        public void onClick(View v) {
+            //TODO
         }
     }
 
@@ -58,6 +64,5 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         cardList.addAll(list);
         notifyDataSetChanged();
     }
-
 
 }

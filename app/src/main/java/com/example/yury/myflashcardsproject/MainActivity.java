@@ -41,9 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         CardReader cardReader = new CardReader();
         cardReader.execute();
-
-
-
     }
 
     public static class Card {
@@ -53,10 +50,6 @@ public class MainActivity extends AppCompatActivity {
         public Card(String question, String answer) {
             this.question = question;
             this.answer = answer;
-        }
-
-        public void warning() {
-            Log.w("1", "warning");
         }
     }
 
