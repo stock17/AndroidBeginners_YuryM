@@ -1,4 +1,4 @@
-package com.example.yury.myflashcardsproject;
+package com.example.yury.myflashcardsproject.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
