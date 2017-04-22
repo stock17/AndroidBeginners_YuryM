@@ -33,8 +33,6 @@ public class AddCardDialog extends DialogFragment implements View.OnClickListene
                 Log.i("DIALOG", "add button");
                 break;
             case R.id.btn_dialog_cancel :
-//                Toast.makeText(getContext(), "CANCEL Button", Toast.LENGTH_SHORT).show();
-                Log.i("DIALOG", "cancel button");
                 dismiss();
                 break;
         }
