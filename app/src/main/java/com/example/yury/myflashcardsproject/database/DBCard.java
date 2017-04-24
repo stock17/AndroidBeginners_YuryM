@@ -2,10 +2,15 @@ package com.example.yury.myflashcardsproject.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.yury.myflashcardsproject.MainActivity;
 import com.example.yury.myflashcardsproject.database.DBHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DBCard {
@@ -32,27 +37,17 @@ public class DBCard {
         database.insert(DBHelper.DATABASE_NAME, null, values);
     }
 
+    public List<MainActivity.Card> getAllCards () {
+        Cursor cursor = database.rawQuery("SELECT * FROM " + DBHelper.DATABASE_NAME, null);
+        cursor.moveToFirst();
+        List<MainActivity.Card> list = new ArrayList<>();
+        while (!cursor.isAfterLast()) {
+            list.add(new MainActivity.Card(cursor.getString(1), cursor.getString(2)));
+        }
+        return list;
+    }
+
 }
 
-   /* //Get all contacts from data base
-    public ArrayList<Contact> getAllContacts() {
-        ArrayList<Contact> contactArrayList = new ArrayList<Contact>();
-
-        Cursor cursor = database.rawQuery("SELECT  * FROM " + TABLE_CONTACTS, null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            Contact contact = new Contact();
-            contact.setName(cursor.getString(1));
-            contact.setLastName(cursor.getString(2));
-            contact.setEmail(cursor.getString(3));
-            contact.setPhoneNumber(cursor.getString(4));
-            contactArrayList.add(contact);
-
-            cursor.moveToNext();
-        }
-
-        cursor.close();
-        return contactArrayList;
-    }*/
 
 

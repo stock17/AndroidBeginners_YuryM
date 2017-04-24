@@ -32,7 +32,7 @@ public class AddCardDialog extends DialogFragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        //TODO
+
         switch (v.getId()) {
             case R.id.btn_dialog_add :
                 db = new DBCard(getContext());
@@ -40,6 +40,8 @@ public class AddCardDialog extends DialogFragment implements View.OnClickListene
                 db.addCard(etDialogQuestion.getText().toString(), etDialogAnswer.getText().toString());
                 db.close();
                 Log.i("DIALOG", "add button");
+                Toast.makeText(getActivity().getApplicationContext(), "Card added", Toast.LENGTH_SHORT); //TODO
+                dismiss();
                 break;
 
             case R.id.btn_dialog_cancel :
