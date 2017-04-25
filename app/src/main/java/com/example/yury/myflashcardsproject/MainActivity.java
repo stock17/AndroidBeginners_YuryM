@@ -16,6 +16,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.example.yury.myflashcardsproject.database.DBCard;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,8 +86,9 @@ public class MainActivity extends AppCompatActivity {
         protected List<Card> doInBackground(Void... voids) {
 
             String jsonString = "";
-            List<Card> cardList;
+            List<Card> cardList   = new ArrayList<>();
 
+//          LOAD CARDS FROM JSON FILE
             try {
                 InputStream inputStream = getApplicationContext().getAssets().open(MainActivity.JSON_FILE);
                 int size = inputStream.available();
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
 
-            cardList = new ArrayList<>();
+
             try{
                 JSONObject jsonObject = new JSONObject(jsonString);
                 JSONArray jsonArray = jsonObject.getJSONArray("questions");
@@ -113,6 +116,14 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+//         LOAD CARDS FROM DATABASE
+
+            DBCard db = new DBCard(getApplicationContext());
+            db.open();
+            cardList.addAll(db.getAllCards());
+            db.close();
+
             return cardList;
         }
 

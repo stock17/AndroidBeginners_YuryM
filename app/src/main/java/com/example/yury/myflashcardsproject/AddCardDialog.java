@@ -7,35 +7,45 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.yury.myflashcardsproject.database.DBCard;
 
 
 public class AddCardDialog extends DialogFragment implements View.OnClickListener{
 
-    Context context;
-
-
+    private DBCard db;
+    private EditText etDialogQuestion, etDialogAnswer;
 
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.dialog_add_card, null);
         v.findViewById(R.id.btn_dialog_add).setOnClickListener(this);
         v.findViewById(R.id.btn_dialog_cancel).setOnClickListener(this);
+
+        etDialogQuestion = (EditText) v.findViewById(R.id.et_dialog_question);
+        etDialogAnswer = (EditText) v.findViewById(R.id.et_dialog_answer);
+
         return v;
     }
 
     @Override
     public void onClick(View v) {
-        //TODO
+
         switch (v.getId()) {
             case R.id.btn_dialog_add :
-                Toast.makeText(getContext(), "ADD Button", Toast.LENGTH_SHORT);
+                db = new DBCard(getContext());
+                db.open();
+                db.addCard(etDialogQuestion.getText().toString(), etDialogAnswer.getText().toString());
+                db.close();
                 Log.i("DIALOG", "add button");
+                Toast.makeText(getActivity().getApplicationContext(), "Card added", Toast.LENGTH_SHORT); //TODO
+                dismiss();
                 break;
-            case R.id.btn_dialog_cancel :
-                Toast.makeText(getContext(), "CANCEL Button", Toast.LENGTH_SHORT);
-                Log.i("DIALOG", "cancel button");
 
+            case R.id.btn_dialog_cancel :
+                dismiss();
                 break;
         }
     }
