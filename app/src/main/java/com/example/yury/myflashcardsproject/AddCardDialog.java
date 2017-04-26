@@ -1,6 +1,7 @@
 package com.example.yury.myflashcardsproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -39,8 +40,10 @@ public class AddCardDialog extends DialogFragment implements View.OnClickListene
                 db.open();
                 db.addCard(etDialogQuestion.getText().toString(), etDialogAnswer.getText().toString());
                 db.close();
+                // TODO Refresh RV adapter
+
                 Log.i("DIALOG", "add button");
-                Toast.makeText(getActivity().getApplicationContext(), "Card added", Toast.LENGTH_SHORT); //TODO
+                Toast.makeText(getActivity().getApplicationContext(), "Card added", Toast.LENGTH_SHORT);
                 dismiss();
                 break;
 

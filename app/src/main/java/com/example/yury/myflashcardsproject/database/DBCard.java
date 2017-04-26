@@ -33,7 +33,7 @@ public class DBCard {
 
         ContentValues values = new ContentValues();
         values.put(DBHelper.COLUMN_QUESTION, question);
-        values.put(DBHelper.COLUMN_ANSwER, answer);
+        values.put(DBHelper.COLUMN_ANSWER, answer);
         database.insert(DBHelper.DATABASE_NAME, null, values);
     }
 
@@ -43,6 +43,7 @@ public class DBCard {
         List<MainActivity.Card> list = new ArrayList<>();
         while (!cursor.isAfterLast()) {
             list.add(new MainActivity.Card(cursor.getString(1), cursor.getString(2)));
+            cursor.moveToNext();
         }
         return list;
     }

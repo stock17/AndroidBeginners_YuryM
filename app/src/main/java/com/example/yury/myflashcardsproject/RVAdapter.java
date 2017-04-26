@@ -23,7 +23,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     public static Context context;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView tvListItemText;
 

@@ -12,7 +12,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_QUESTION = "question";
-    public static final String COLUMN_ANSwER = "answer";
+    public static final String COLUMN_ANSWER = "answer";
 
 
     public DBHelper(Context context) {
@@ -25,7 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String execString = "CREATE TABLE " + DATABASE_NAME + "( " +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_QUESTION + " TEXT, " +
-                COLUMN_ANSwER + " TEXT)";
+                COLUMN_ANSWER + " TEXT)";
 
         db.execSQL(execString);
     }
