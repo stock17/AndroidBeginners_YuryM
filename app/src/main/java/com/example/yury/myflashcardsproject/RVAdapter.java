@@ -20,7 +20,6 @@ import java.util.Map;
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     public static List<MainActivity.Card> cardList = new ArrayList<MainActivity.Card>();
-
     public static Context context;
 
 
@@ -73,6 +72,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     public void update (List<MainActivity.Card> list) {
         cardList.clear();
         cardList.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void addCard (MainActivity.Card card) {
+        cardList.add(card);
         notifyDataSetChanged();
     }
 

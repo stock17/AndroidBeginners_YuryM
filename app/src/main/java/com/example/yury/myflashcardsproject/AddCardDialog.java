@@ -41,6 +41,7 @@ public class AddCardDialog extends DialogFragment implements View.OnClickListene
                 db.addCard(etDialogQuestion.getText().toString(), etDialogAnswer.getText().toString());
                 db.close();
                 // TODO Refresh RV adapter
+                MainActivity.adapter.addCard(new MainActivity.Card(etDialogQuestion.getText().toString(), etDialogAnswer.getText().toString()));
 
                 Log.i("DIALOG", "add button");
                 Toast.makeText(getActivity().getApplicationContext(), "Card added", Toast.LENGTH_SHORT);
