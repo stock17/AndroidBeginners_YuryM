@@ -37,9 +37,9 @@ public class AddCardDialog extends DialogFragment implements View.OnClickListene
         switch (v.getId()) {
             case R.id.btn_dialog_add :
                 db = new DBCard(getContext());
-                db.open();
+//                db.open();
                 db.addCard(etDialogQuestion.getText().toString(), etDialogAnswer.getText().toString());
-                db.close();
+//                db.close();
                 // TODO Refresh RV adapter
                 MainActivity.adapter.addCard(new MainActivity.Card(etDialogQuestion.getText().toString(), etDialogAnswer.getText().toString()));
 

@@ -21,6 +21,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
         </activity>
+        <provider
+            android:name=".database.CardProvider"
+            android:authorities="com.example.yury.myflashcardsproject"
+            android:exported="false" />
     </application>
 
 </manifest>

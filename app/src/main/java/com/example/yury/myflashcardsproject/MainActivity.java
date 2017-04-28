@@ -1,8 +1,11 @@
 package com.example.yury.myflashcardsproject;
 
 import android.app.Dialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.yury.myflashcardsproject.card.CardLoader;
+import com.example.yury.myflashcardsproject.database.CardContract;
 import com.example.yury.myflashcardsproject.database.DBCard;
 
 import org.json.JSONArray;
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity  {
         fabAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+
                 addCardDialog.show(getSupportFragmentManager(), "TAG");
 
             }

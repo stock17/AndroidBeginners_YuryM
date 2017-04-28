@@ -39,13 +39,13 @@ public class CardProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
 
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor;
 
         int match = uriMatcher.match(uri);
         switch (match) {
             case CARDS:
-                cursor = db.query(CardContract.CardEntry.TABLE_NAME,
+                cursor = db.query(CardEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -55,9 +55,9 @@ public class CardProvider extends ContentProvider {
                 break;
 
             case CARD_ID:
-                selection = CardContract.CardEntry.COLUMN_ID + "=?";
+                selection = CardEntry._ID + "=?";
                 selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
-                cursor = db.query(CardContract.CardEntry.TABLE_NAME,
+                cursor = db.query(CardEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -70,9 +70,9 @@ public class CardProvider extends ContentProvider {
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }
 
-        helper.close();
         return cursor;
     }
+
 
     @Nullable
     @Override
@@ -117,14 +117,14 @@ public class CardProvider extends ContentProvider {
                 result = db.delete(CardEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             case CARD_ID:
-                selection = CardEntry.COLUMN_ID + "=?";
+                selection = CardEntry._ID + "=?";
                 selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
                 result = db.delete(CardEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
         }
-        db.close();
+
         return result;
     }
 
@@ -135,7 +135,7 @@ public class CardProvider extends ContentProvider {
             case CARDS:
                 return updateCards(uri, values, selection, selectionArgs);
             case CARD_ID:
-                selection = CardEntry.COLUMN_ID + "=?";
+                selection = CardEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 return updateCards(uri, values, selection, selectionArgs);
             default:
@@ -145,8 +145,6 @@ public class CardProvider extends ContentProvider {
 
     private int updateCards(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        int i = db.update(CardEntry.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
-        return i;
+        return  db.update(CardEntry.TABLE_NAME, values, selection, selectionArgs);
     }
 }

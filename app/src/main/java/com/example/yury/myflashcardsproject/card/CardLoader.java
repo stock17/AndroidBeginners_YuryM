@@ -1,11 +1,15 @@
 package com.example.yury.myflashcardsproject.card;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.os.AsyncTask;
 
 
 import com.example.yury.myflashcardsproject.MainActivity;
+import com.example.yury.myflashcardsproject.database.CardContract;
+import com.example.yury.myflashcardsproject.database.CardProvider;
 import com.example.yury.myflashcardsproject.database.DBCard;
 
 import org.json.JSONArray;
@@ -68,10 +72,9 @@ public class CardLoader extends AsyncTask<Void, Void, List<MainActivity.Card>> {
 //         LOAD CARDS FROM DATABASE
 
 
-        DBCard db = new DBCard(MainActivity.context);
-        db.open();
-        cardList.addAll(db.getAllCards());
-        db.close();
+        DBCard dbc = new DBCard(MainActivity.context);
+        cardList.addAll(dbc.getAllCards());
+
 
         return cardList;
     }

@@ -20,7 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String execString = "CREATE TABLE " + CardEntry.TABLE_NAME + " (" +
-                CardEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                CardEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 CardEntry.COLUMN_QUESTION + " TEXT, " +
                 CardEntry.COLUMN_ANSWER + " TEXT)";
 
