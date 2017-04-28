@@ -46,6 +46,7 @@ public class DBCard {
             list.add(new MainActivity.Card(cursor.getString(1), cursor.getString(2)));
             cursor.moveToNext();
         }
+        cursor.close();
         return list;
     }
 

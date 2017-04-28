@@ -46,7 +46,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     public RVAdapter (List<MainActivity.Card> list, Context context) {
         this.context = context;
         cardList.addAll(list);
-        cardList.add(new MainActivity.Card("1", "2"));
     }
 
     @Override
