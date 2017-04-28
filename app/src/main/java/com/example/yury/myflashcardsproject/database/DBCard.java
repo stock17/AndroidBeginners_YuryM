@@ -7,7 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.yury.myflashcardsproject.MainActivity;
-import com.example.yury.myflashcardsproject.database.DBHelper;
+import static com.example.yury.myflashcardsproject.database.CardContract.CardEntry;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,13 @@ public class DBCard {
     public void addCard(String question, String answer) {
 
         ContentValues values = new ContentValues();
-        values.put(DBHelper.COLUMN_QUESTION, question);
-        values.put(DBHelper.COLUMN_ANSWER, answer);
-        database.insert(DBHelper.DATABASE_NAME, null, values);
+        values.put(CardEntry.COLUMN_QUESTION, question);
+        values.put(CardEntry.COLUMN_ANSWER, answer);
+        database.insert(CardEntry.TABLE_NAME, null, values);
     }
 
     public List<MainActivity.Card> getAllCards () {
-        Cursor cursor = database.rawQuery("SELECT * FROM " + DBHelper.DATABASE_NAME, null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + CardEntry.TABLE_NAME, null);
         cursor.moveToFirst();
         List<MainActivity.Card> list = new ArrayList<>();
         while (!cursor.isAfterLast()) {

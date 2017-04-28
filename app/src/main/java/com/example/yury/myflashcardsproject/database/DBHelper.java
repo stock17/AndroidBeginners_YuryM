@@ -9,7 +9,7 @@ import static com.example.yury.myflashcardsproject.database.CardContract.CardEnt
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "cards";
+    public static final String DATABASE_NAME = "cards.db";
     public static final int DATABASE_VERSION = 1;
 
     public DBHelper(Context context) {
