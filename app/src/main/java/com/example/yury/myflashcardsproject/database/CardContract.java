@@ -11,7 +11,6 @@ public final class CardContract {
     public static final class CardEntry implements BaseColumns {
 
         public static final String TABLE_NAME = "cards";
-        public static final int DATABASE_VERSION = 1;
 
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_QUESTION = "question";
