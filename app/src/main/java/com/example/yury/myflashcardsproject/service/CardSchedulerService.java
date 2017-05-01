@@ -16,7 +16,7 @@ public class CardSchedulerService extends JobService {
         Notification notification = new NotificationCompat.Builder(getApplicationContext())
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle("Study your cards")
-            .setContentText("I must open your FlashCardProject")
+            .setContentText("You must open your FlashCardProject")
             .setAutoCancel(true)
             .build();
 

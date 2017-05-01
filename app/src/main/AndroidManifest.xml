@@ -27,6 +27,20 @@
             android:exported="false" />
         <service android:name=".service.CardSchedulerService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+        <receiver
+            android:name=".widget.CardWidget"
+            android:icon="@android:drawable/star_big_on"
+            android:label="@string/widget_name">
+            <intent-filter>
+                <action
+                    android:name="android.appwidget.action.APPWIDGET_UPDATE">
+                </action>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_metadata">
+            </meta-data>
+        </receiver>
     </application>
 
 </manifest>
