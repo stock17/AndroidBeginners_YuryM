@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity  {
     }
 
    public static class Card {
-        String question;
-        String answer;
+        public String question;
+        public String answer;
 
         public Card(String question, String answer) {
             this.question = question;

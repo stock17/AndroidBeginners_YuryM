@@ -18,20 +18,20 @@
         >
 
         <Button
-            android:id="@+id/btb_wdt_aq"
+            android:id="@+id/btn_wdt_aq"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="@dimen/tiny_margin"
+
             android:text="See answer"
             />
 
         <Button
-            android:id="@+id/btb_wdt_next"
+            android:id="@+id/btn_wdt_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="@dimen/tiny_margin"
+
             android:text="Next question"
             />
 
