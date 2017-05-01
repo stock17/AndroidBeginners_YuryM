@@ -25,6 +25,8 @@
             android:name=".database.CardProvider"
             android:authorities="com.example.yury.myflashcardsproject"
             android:exported="false" />
+        <service android:name=".service.CardSchedulerService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

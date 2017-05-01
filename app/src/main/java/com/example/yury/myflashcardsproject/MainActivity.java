@@ -1,44 +1,23 @@
 package com.example.yury.myflashcardsproject;
 
-import android.app.Dialog;
-import android.content.ContentResolver;
-import android.content.ContentValues;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.example.yury.myflashcardsproject.card.CardLoader;
-import com.example.yury.myflashcardsproject.database.CardContract;
-import com.example.yury.myflashcardsproject.database.DBCard;
+import com.example.yury.myflashcardsproject.service.CardSchedulerService;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static com.example.yury.myflashcardsproject.RVAdapter.context;
 
 
 public class MainActivity extends AppCompatActivity  {
@@ -78,6 +57,16 @@ public class MainActivity extends AppCompatActivity  {
 
         CardLoader cardLoader = new CardLoader();
         cardLoader.execute();
+
+        // SCHEDULER PART
+
+        JobScheduler mJobScheduler = (JobScheduler)
+                getSystemService( Context.JOB_SCHEDULER_SERVICE );
+        JobInfo.Builder builder = new JobInfo.Builder( 1,
+                new ComponentName( getPackageName(),
+                        CardSchedulerService.class.getName() ) );
+        builder.setPeriodic(10000);
+        mJobScheduler.schedule(builder.build());
 
     }
 
