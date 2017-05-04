@@ -3,8 +3,10 @@ package com.example.yury.myflashcardsproject.widget;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -18,77 +20,91 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Yury on 01.05.2017.
- */
-
 public class CardWidget extends AppWidgetProvider {
 
-    private List<MainActivity.Card> widgetList;
+    private static final String WIDGET_ANSWER_ACTION = "showansweronthisquestion";
+    private static final String WIDGET_NEXTQUESTION_ACTION = "shownextquestion";
 
-    private final String LOG_TAG = "widget";
+    private static final String TEMP_FILE = "temp";
+    private static final String SP_QUESTION = "question";
+    private static final String SP_ANSWER = "answer";
 
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        Log.d(LOG_TAG, "onEnabled");
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-                         int[] appWidgetIds) {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+
         super.onUpdate(context, appWidgetManager, appWidgetIds);
-        Log.d(LOG_TAG, "onUpdate " + Arrays.toString(appWidgetIds));
-        for (int i : appWidgetIds) {
-            updateWidget(context, appWidgetManager, i);
-        }
+        showNextQuestion(context, appWidgetManager, appWidgetIds[0]);
+
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+
+
+        Intent answerIntent = new Intent(context, this.getClass());
+        answerIntent.setAction(WIDGET_ANSWER_ACTION);
+        PendingIntent answerPendingIntent = PendingIntent.getBroadcast(context, 0, answerIntent, 0);
+        remoteViews.setOnClickPendingIntent(R.id.btn_wdt_aq, answerPendingIntent);
+
+        Intent nextQuestionIntent = new Intent(context, this.getClass());
+        nextQuestionIntent.setAction(WIDGET_NEXTQUESTION_ACTION);
+        PendingIntent nextQuestionPendingIntent = PendingIntent.getBroadcast(context, 0, nextQuestionIntent, 0);
+        remoteViews.setOnClickPendingIntent(R.id.btn_wdt_next, nextQuestionPendingIntent);
+
+        appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
     }
 
-    private void updateWidget(Context context, AppWidgetManager appWidgetManager, int id) {
+    private void showNextQuestion(Context context, AppWidgetManager appWidgetManager, int  id) {
 
-        DBCard dbc = new DBCard(context);
-        widgetList = dbc.getAllCards();
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 
-        int n = widgetList.size();
-        RemoteViews widgetView = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+        DBCard dbCard = new DBCard(context);
+        List<MainActivity.Card> list = dbCard.getAllCards();
 
-        if (n < 1) {
-            widgetView.setTextViewText(R.id.tv_wigdet, "No questions in database. Please, add cards in application");
+        SharedPreferences sp = context.getSharedPreferences(TEMP_FILE, context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        if (list.size() < 1) {
+            remoteViews.setTextViewText(R.id.tv_wigdet, "No card in database");
+            editor.putString(SP_QUESTION, "No card in database");
+            editor.putString(SP_ANSWER, "No card in database");
+            editor.commit();
         } else {
             Random random = new Random();
-            String question = widgetList.get(random.nextInt(n)).question;
-            widgetView.setTextViewText(R.id.tv_wigdet, question);
+            int nCard = random.nextInt(list.size());
+            String question = list.get(nCard).question;
+            remoteViews.setTextViewText(R.id.tv_wigdet, question);
+
+            editor.putString(SP_QUESTION, list.get(nCard).question);
+            editor.putString(SP_ANSWER, list.get(nCard).answer);
+            editor.commit();
         }
 
-        Intent nextIntent = new Intent(context, CardWidget.class);
-        nextIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id);
-        PendingIntent pIntent = PendingIntent.getBroadcast(context, id, nextIntent, 0);
-        widgetView.setOnClickPendingIntent(R.id.btn_wdt_next, pIntent);
+        appWidgetManager.updateAppWidget(id, remoteViews);
 
-        appWidgetManager.updateAppWidget(id, widgetView);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            int id = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
-            updateWidget(context, AppWidgetManager.getInstance(context), id );
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        ComponentName provider = new ComponentName(context, this.getClass());
+
+        if (WIDGET_ANSWER_ACTION.equalsIgnoreCase(intent.getAction())) {
+
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+            SharedPreferences sp = context.getSharedPreferences(TEMP_FILE, context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            String answer = sp.getString(SP_ANSWER, "No card in database");
+            remoteViews.setTextViewText(R.id.tv_wigdet, answer);
+            appWidgetManager.updateAppWidget(provider, remoteViews);
+
+        } else if (WIDGET_NEXTQUESTION_ACTION.equalsIgnoreCase(intent.getAction())) {
+
+            this.onUpdate(context, appWidgetManager, appWidgetManager.getAppWidgetIds(provider));
         }
     }
-
-    @Override
-    public void onDeleted(Context context, int[] appWidgetIds) {
-        super.onDeleted(context, appWidgetIds);
-        Log.d(LOG_TAG, "onDeleted " + Arrays.toString(appWidgetIds));
-    }
-
-    @Override
-    public void onDisabled(Context context) {
-        super.onDisabled(context);
-        Log.d(LOG_TAG, "onDisabled");
-    }
-
 }
